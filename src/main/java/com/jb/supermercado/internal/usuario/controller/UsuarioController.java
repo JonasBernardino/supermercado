@@ -3,6 +3,7 @@ package com.jb.supermercado.internal.usuario.controller;
 import com.jb.supermercado.internal.usuario.dto.UsuarioRequestRecord;
 import com.jb.supermercado.internal.usuario.dto.UsuarioResponseRecord;
 import com.jb.supermercado.internal.usuario.service.UsuarioService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +31,7 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> cadastrar(@RequestBody UsuarioRequestRecord usuarioRequest) {
+    public ResponseEntity<Void> cadastrar(@Valid @RequestBody UsuarioRequestRecord usuarioRequest) {
         this.usuarioService.cadastrarUsuario(usuarioRequest);
         return ResponseEntity.status(HttpStatus.CREATED).build();
 
