@@ -42,7 +42,7 @@ public class UsuarioService {
 
     public void atualizarUsuario(Long id, UsuarioRequestRecord usuarioRequest) {
         UsuarioEntity usuarioEntity = this.usuarioRepository.findById(id).orElseThrow(()
-                -> new RuntimeException("Usuario nao Encontrado"));
+                -> new RecursoNaoEncontradoException("Usuario nao Encontrado"));
         usuarioEntity.setNome(usuarioRequest.nome());
         usuarioEntity.setEmail(usuarioRequest.email());
         usuarioEntity.setSenha(usuarioRequest.senha());
