@@ -1,7 +1,7 @@
 package com.jb.supermercado.internal.usuario.controller;
 
-import com.jb.supermercado.internal.usuario.dto.UsuarioRequestRecord;
-import com.jb.supermercado.internal.usuario.dto.UsuarioResponseRecord;
+import com.jb.supermercado.internal.usuario.dto.UsuarioRequest;
+import com.jb.supermercado.internal.usuario.dto.UsuarioResponse;
 import com.jb.supermercado.internal.usuario.service.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -21,24 +21,24 @@ public class UsuarioController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UsuarioResponseRecord>> listar() {
+    public ResponseEntity<List<UsuarioResponse>> listar() {
         return ResponseEntity.ok(this.usuarioService.listaUsuarios());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UsuarioResponseRecord> buscar(@PathVariable Long id) {
+    public ResponseEntity<UsuarioResponse> buscar(@PathVariable Long id) {
         return ResponseEntity.ok(this.usuarioService.buscarUsuarioPorId(id));
     }
 
     @PostMapping
-    public ResponseEntity<Void> cadastrar(@Valid @RequestBody UsuarioRequestRecord usuarioRequest) {
+    public ResponseEntity<Void> cadastrar(@Valid @RequestBody UsuarioRequest usuarioRequest) {
         this.usuarioService.cadastrarUsuario(usuarioRequest);
         return ResponseEntity.status(HttpStatus.CREATED).build();
 
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> atualizar(@PathVariable Long id, @RequestBody UsuarioRequestRecord usuarioRequest) {
+    public ResponseEntity<Void> atualizar(@PathVariable Long id, @RequestBody UsuarioRequest usuarioRequest) {
         this.usuarioService.atualizarUsuario(id, usuarioRequest);
         return ResponseEntity.noContent().build();
     }
