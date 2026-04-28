@@ -8,19 +8,13 @@ pipeline {
             }
         }
 
-        stage('Compilar aplicação') {
+        stage('Preparar Maven Wrapper') {
             steps {
-                sh './mvnw clean compile'
+                sh 'chmod +x mvnw'
             }
         }
 
-        stage('Executar testes') {
-            steps {
-                sh './mvnw test'
-            }
-        }
-
-        stage('Gerar arquivo JAR') {
+        stage('Build e testes') {
             steps {
                 sh './mvnw clean package'
             }
