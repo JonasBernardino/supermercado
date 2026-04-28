@@ -8,7 +8,7 @@ pipeline {
             }
         }
 
-        stage('Build e testes') {
+        stage('Build, testes e cobertura') {
             steps {
                 sh './mvnw clean verify'
             }
@@ -20,8 +20,17 @@ pipeline {
                     sh '''
                         ./mvnw sonar:sonar \
                         -Dsonar.projectKey=supermercado \
-                        -Dsonar.projectName=supermercado
+                        -Dsonar.projectName=supermercado \
+                        -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
                     '''
+                }
+            }
+        }
+
+        stage('Verificar Quality Gate') {
+            steps {
+                timeout(time: 2, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
                 }
             }
         }
