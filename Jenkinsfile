@@ -2,12 +2,6 @@ pipeline {
     agent any
 
     stages {
-        stage('Clonar projeto') {
-            steps {
-                checkout scm
-            }
-        }
-
         stage('Preparar Maven Wrapper') {
             steps {
                 sh 'chmod +x mvnw'
@@ -16,7 +10,19 @@ pipeline {
 
         stage('Build e testes') {
             steps {
-                sh './mvnw clean package'
+                sh './mvnw clean verify'
+            }
+        }
+
+        stage('Análise SonarQube') {
+            steps {
+                withSonarQubeEnv('SonarQube') {
+                    sh '''
+                        ./mvnw sonar:sonar \
+                        -Dsonar.projectKey=supermercado \
+                        -Dsonar.projectName=supermercado
+                    '''
+                }
             }
         }
     }
